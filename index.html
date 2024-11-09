@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blockchain Merkle Proof Verification</title>
+  <style>
+    /* Basic reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f4f7fc;
+      color: #333;
+      line-height: 1.6;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      padding: 2rem;
+      width: 100%;
+      max-width: 600px;
+      text-align: center;
+    }
+    h1 {
+      color: #4a90e2;
+      margin-bottom: 1rem;
+      font-size: 2rem;
+    }
+    p {
+      margin-bottom: 1rem;
+      font-size: 1rem;
+      color: #666;
+    }
+    form {
+      margin-bottom: 1.5rem;
+    }
+    input {
+      width: 80%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 4px;
+      border: 1px solid #ddd;
+      font-size: 1rem;
+      outline: none;
+    }
+    input:focus {
+      border-color: #4a90e2;
+    }
+    button {
+      padding: 10px 20px;
+      background-color: #4a90e2;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #357abd;
+    }
+    pre {
+      text-align: left;
+      background-color: #f1f1f1;
+      padding: 1rem;
+      border-radius: 4px;
+      max-height: 300px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      font-family: 'Courier New', Courier, monospace;
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <div id="root" class="container">
+    <h1>Blockchain Merkle Proof Verification</h1>
+    <p>Connect your wallet to verify Merkle proofs.</p>
+
+    <form>
+      <input type="text" name="txHash" placeholder="Enter Transaction Hash" required />
+      <button type="submit">Generate Merkle Proof</button>
+    </form>
+
+    <div id="proofContainer">
+      <!-- Proof will be displayed here -->
+    </div>
+  </div>
+
+  <script src="bundle.js"></script>
+</body>
+</html>
