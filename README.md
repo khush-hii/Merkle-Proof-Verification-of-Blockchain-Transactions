@@ -1,91 +1,61 @@
-#Merkle Proof Verification of Blockchain Transactions
-##Overview
-This project involves building a smart contract on the Ethereum-based Sepolia or zkSync testnets to verify the inclusion of a specific transaction from a given block using Merkle proofs. The contract stores the Merkle root of transactions from a block and allows users to submit Merkle proofs to verify if a particular transaction hash is part of the Merkle tree.
+Merkle Proof Verification of Blockchain Transactions
 
-The frontend interacts with the smart contract to allow users to verify transactions through a simple web interface. The project utilizes Solidity for the smart contract, Web3.js for blockchain interaction, and ReactJS for the user interface.
+Overview
 
-#Features
-Merkle Root Storage: The contract stores the Merkle root of a block's transactions.
-Transaction Verification: Users can verify the inclusion of a specific transaction hash using a Merkle proof.
+This project implements a smart contract on the Ethereum-based Sepolia or zkSync testnets to verify if a transaction is included in a block's Merkle tree. Users can submit a Merkle proof to check if a specific transaction hash is part of the tree. The contract stores the Merkle root and allows verification via a simple ReactJS frontend using Web3.js.
+
+Features
+Merkle Root Storage: Stores Merkle root of a block's transactions.
+Transaction Verification: Verifies if a transaction is part of the Merkle tree using a Merkle proof.
 Owner Access Control: Only the contract owner can set the Merkle root.
-Gas Optimization: Efficient gas usage for Merkle proof verification.
-User Interface: A simple web interface for interaction with the blockchain contract.
+Gas Optimization: Efficient gas usage for proof verification.
+Frontend Interface: Simple UI to interact with the blockchain.
 Prerequisites
-MetaMask: Installed and configured for the Sepolia or zkSync testnet.
-Alchemy Account: For Sepolia or zkSync API access (optional, for connecting via custom RPC).
-Remix IDE: For deploying and interacting with the smart contract.
-Node.js: For running the frontend React app.
+MetaMask: Configured for Sepolia or zkSync testnet.
+Alchemy: (Optional) for RPC access.
+Remix IDE: For deploying the contract.
+Node.js: To run the ReactJS frontend.
 Setup Instructions
-Step 1: Deploy the Smart Contract
-Clone or Download the Project:
+Deploy the Smart Contract
 
-Clone or download the project repository to your local machine.
-Deploy the Contract on Remix:
+Clone the repository and open Remix IDE.
+Paste the MerkleVerification.sol code and deploy it to Sepolia or zkSync.
+Save the contract address post-deployment.
+Set the Merkle Root
 
-#Open Remix IDE.
-Create a new file and paste the MerkleVerification.sol contract code into the file.
-Compile the contract with the Solidity compiler version 0.8.18.
-In the "Deploy & Run Transactions" tab, select Injected Web3 as the environment.
-Ensure MetaMask is connected to the Sepolia or zkSync testnet.
-Deploy the contract by clicking the "Deploy" button and confirming the transaction in MetaMask.
-Save the Contract Address:
+Use the owner's address to call the setMerkleRoot function with the correct Merkle root from the block’s transactions.
+Frontend Setup
 
-After deployment, copy the deployed contract address from Remix.
-Step 2: Set the Merkle Root
-Set the Merkle Root:
-After deployment, use the contract owner address (your address) to call the setMerkleRoot function from the Remix console.
-The Merkle root should be the root of the Merkle tree generated from a specific block's transaction hashes.
-Step 3: Frontend Setup
-Install Dependencies:
-
-In the project directory, run the following commands to install the necessary dependencies:
+Install dependencies:
 bash
 Copy code
-npm install web3
-npm install react
-npm install react-dom
-Create the Frontend:
+npm install web3 react react-dom
+Set up Web3.js in app.js to interact with the smart contract using the ABI and contract address.
+Run the Application
 
-In the index.html, add a simple form to accept the transaction hash and Merkle proof.
-In the app.js, set up Web3.js to interact with the deployed smart contract using the ABI and contract address.
-Step 4: Running the Application
-Run the Frontend Application:
-Open the index.html file in your browser.
-Ensure that MetaMask is connected to the correct testnet (Sepolia or zkSync).
-Enter the transaction hash and Merkle proof (in JSON array format) and click "Verify Transaction."
-The result will show whether the transaction is part of the Merkle tree.
-Contract Functions
-setMerkleRoot(bytes32 _merkleRoot)
-Description: Allows the owner to set the Merkle root of the transactions in a block.
-Access Control: Only the contract owner can call this function.
-verifyTransaction(bytes32[] calldata proof, bytes32 transactionHash)
-Description: Verifies if a given transaction hash is part of the Merkle tree using the provided Merkle proof.
-Inputs:
-proof: An array of bytes32 values representing the Merkle proof.
-transactionHash: The bytes32 hash of the transaction to verify.
-Returns: true if the transaction is part of the Merkle tree, false otherwise.
+Open index.html in your browser.
+Connect MetaMask to the correct testnet.
+Input the transaction hash and Merkle proof to verify.
+Smart Contract Functions
+setMerkleRoot(bytes32 _merkleRoot): Allows the owner to set the Merkle root.
+verifyTransaction(bytes32[] calldata proof, bytes32 transactionHash): Verifies if a transaction is part of the Merkle tree.
 Example Input and Output
-Frontend Form
-Transaction Hash:
-A transaction hash to verify (e.g., 0x123...abc).
-
-#Merkle Proof:
-A JSON array of the Merkle proof (e.g., ["0xabc...", "0xdef...", "0xghi..."]).
-
-#Verification Result
-Transaction is valid: The proof confirms the transaction is part of the Merkle tree.
-Transaction is not valid: The proof does not match the Merkle tree.
-Gas Optimization and Access Control
-Gas Optimization: The smart contract is optimized for lower gas costs by minimizing storage and computations.
-Access Control: Only the contract owner can set the Merkle root, ensuring that unauthorized users cannot alter the contract state.
+Input:
+Transaction Hash: 0x123...abc
+Merkle Proof: ["0xabc...", "0xdef...", "0xghi..."]
+Output:
+"Transaction is valid" if the proof matches the Merkle root.
+"Transaction is not valid" if the proof does not match.
+Gas Optimization & Access Control
+Gas Optimization: Minimizes storage and computations.
+Access Control: Only the contract owner can set the Merkle root.
 Edge Cases
-Invalid Proofs: If a malformed proof is submitted, the smart contract will return false.
-Empty Proofs: The contract will return false for empty or incomplete proofs.
-Invalid Merkle Root: The contract will only verify proofs against the root set by the owner, ensuring data integrity.
+Invalid or empty proofs return false.
+Only valid Merkle roots can be used for verification.
 Troubleshooting
-MetaMask not connected: Ensure that MetaMask is properly connected to the testnet and that the account is unlocked.
-Contract Deployment Issues: Verify the contract is deployed to the correct network and that the contract address is correctly set in the frontend.
-Proof Verification: Double-check the Merkle proof format (array of bytes32 values) and ensure it’s correctly formatted in the frontend.
+Ensure MetaMask is connected to the correct testnet and unlocked.
+Double-check the contract address in the frontend.
+Verify Merkle proof format (array of bytes32).
 Additional Considerations
-Testing: Ensure thorough testing using different block hashes and proofs to verify correct behavior under various scenarios.
-Security: For production use, consider implementing additional security measures such as rate-limiting access to the contract and further optimizing the Merkle proof verification function.
+Testing: Test with multiple blocks and proofs.
+Security: Implement rate-limiting and further gas optimizations for production use.
